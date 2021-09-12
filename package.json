@@ -1,0 +1,18 @@
+{
+  "name": "chat_app",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "git@github.com:paukol/chat_app.git",
+  "author": "Paulina Kolonczyk <paulinakolonczyk@interia.pl>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon server.js",
+    "build": "cd client && yarn install && yarn build"
+  },
+  "dependencies": {
+    "express": "4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
