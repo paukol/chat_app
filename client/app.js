@@ -1,5 +1,8 @@
 'use strict';
 
+const socket = io();
+socket.on('message', ({author, content}) => addMessage(author, content));
+
 const references = {
   loginForm: document.getElementById('welcome-form'),
   messagesSection: document.getElementById('messages-section'),
@@ -40,6 +43,7 @@ const sendMessage = function(event) {
   event.preventDefault();
   if(references.messageContentInput.value) {
     addMessage(userName, references.messageContentInput.value);
+    socket.emit('message', { author: userName, content: references.messageContentInput.value });
     references.messageContentInput.value = '';
   } else window.alert('You have to type your message');
 }
