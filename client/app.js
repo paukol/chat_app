@@ -2,6 +2,8 @@
 
 const socket = io();
 socket.on('message', ({author, content}) => addMessage(author, content));
+socket.on('newUser', ({ author, content }) => addOrRemoveUserMessage(author, content));
+socket.on('userHasLeft', ({ author, content }) => addOrRemoveUserMessage(author, content));
 
 const references = {
   loginForm: document.getElementById('welcome-form'),
@@ -20,6 +22,7 @@ const login = function(event) {
     userName = references.userNameInput.value;
     references.messagesSection.classList.add('show');
     references.loginForm.classList.remove('show');
+    socket.emit('login', {name: userName, id: socket.id });
   } else window.alert('Write your login!');
 };
 
@@ -34,6 +37,21 @@ function addMessage(author, content) {
     <h3 class="message__author">${userName === author ? 'You' : author }</h3>
     <div class="message__content">
       ${content}
+    </div>
+  `;
+  references.messagesList.appendChild(message);
+}
+
+function addOrRemoveUserMessage(author, content) {
+  const message = document.createElement('li');
+  message.classList.add('message');
+  message.classList.add('message--received');
+  message.classList.add('message--self');
+  message.classList.add('message--changeUser');
+  message.innerHTML = `
+    <h3 class="message__author">${ author }</h3>
+    <div class="message__content">
+      ${ content }
     </div>
   `;
   references.messagesList.appendChild(message);

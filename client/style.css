@@ -127,3 +127,8 @@ p {
     opacity: 1;
   }
 }
+
+.message--changeUser .message__content {
+    font-style: italic;
+    background-color: grey;
+  }
